@@ -11,27 +11,22 @@ package siga;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        System.out.println("=== SIGA - Atividade de Padrões Criacionais (código inicial) ===\n");
+public static void main(String[] args) {
+    System.out.println("=== SIGA - Atividade de Padrões Criacionais ===\n");
 
-        AcessoDados acesso = AcessoDados.getInstancia();
-        acesso.conectar(new FabricaMySQL());
-        System.out.println();
-        acesso.conectar(new FabricaPostgreSQL());
+    AcessoDados acesso = AcessoDados.getInstancia();
+    acesso.conectar(new FabricaMySQL());
+    System.out.println();
+    acesso.conectar(new FabricaPostgreSQL());
 
-        System.out.println();
-        String consulta = new ConsultaBuilder("aluno")
-        .comFiltro("curso = 'DSM'")
-        .comOrdenacao("nome")
-        .comLimite(50)
-        .comTimeout(30)
-        .somenteAtivos()
-        .construir();
-        System.out.println("Consulta montada: " + consulta);
-
-        System.out.println("\nObserve: nada garante que conexão e comando sejam do mesmo");
-        System.out.println("fornecedor (Abstract Factory resolve); o método de consulta tem");
-        System.out.println("parâmetros demais (Builder resolve); e não há controle de");
-        System.out.println("instância única do acesso ao banco (Singleton resolve).");
-    }
+    System.out.println();
+    String consulta = new ConsultaBuilder("aluno")
+            .comFiltro("curso = 'DSM'")
+            .comOrdenacao("nome")
+            .comLimite(50)
+            .comTimeout(30)
+            .somenteAtivos()
+            .construir();
+    System.out.println("Consulta montada: " + consulta);
+}
 }
