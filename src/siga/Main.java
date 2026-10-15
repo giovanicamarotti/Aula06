@@ -14,15 +14,19 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("=== SIGA - Atividade de Padrões Criacionais (código inicial) ===\n");
 
-        AcessoDados acesso = new AcessoDados();
-        acesso.conectar("MYSQL");
+        AcessoDados acesso = AcessoDados.getInstancia();
+        acesso.conectar(new FabricaMySQL());
         System.out.println();
-        acesso.conectar("POSTGRESQL");
+        acesso.conectar(new FabricaPostgreSQL());
 
         System.out.println();
-        // PROBLEMA 2 em ação: o que significa cada número nesta chamada?
-        String consulta = acesso.montarConsulta("aluno", "curso = 'DSM'", "nome",
-                50, 0, 30, true);
+        String consulta = new ConsultaBuilder("aluno")
+        .comFiltro("curso = 'DSM'")
+        .comOrdenacao("nome")
+        .comLimite(50)
+        .comTimeout(30)
+        .somenteAtivos()
+        .construir();
         System.out.println("Consulta montada: " + consulta);
 
         System.out.println("\nObserve: nada garante que conexão e comando sejam do mesmo");
